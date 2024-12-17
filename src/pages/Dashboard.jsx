@@ -1,9 +1,14 @@
-import Card from "../components/Card"
+import Card from "../components/Card";
+import Form from "../components/InviteForm";
+import NavBar from "../components/NavBar";
 const Dashboard = () => {
   return (
-    <Card user="John"/>
-  )
-}
+    <>
+      <NavBar />
+      <Card user="John" />
+      <Form />
+    </>
+  );
+};
 
-export default Dashboard
-
+export default Dashboard;

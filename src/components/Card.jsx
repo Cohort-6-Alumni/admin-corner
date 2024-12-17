@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Card = ({user}) => {
   return (
-    <div className="m-6 bg-gradient-to-r from-purple-500 to-blue-500 relative rounded-lg shadow-md p-6">
+    <div className="mb-6 bg-gradient-to-r from-purple-500 to-blue-500 relative rounded-lg shadow-md p-6">
       <img
         src={TopLeftRight}
         alt="Top Left"
