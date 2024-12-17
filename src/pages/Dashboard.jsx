@@ -1,14 +1,17 @@
 import Card from "../components/Card";
-import Form from "../components/InviteForm";
+import InviteForm from "../components/InviteForm";
 import NavBar from "../components/NavBar";
-const Dashboard = () => {
+import PropTypes from "prop-types";
+const Dashboard = ({ user }) => {
   return (
     <>
       <NavBar />
-      <Card user="John" />
-      <Form />
+      <Card user={`${user.data.firstName} ${user?.data.lastName}`} />
+      <InviteForm token={user?.token} />
     </>
   );
 };
-
+Dashboard.propTypes = {
+  user: PropTypes.object.isRequired,
+};
 export default Dashboard;

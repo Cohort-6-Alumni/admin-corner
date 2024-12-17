@@ -1,22 +1,44 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { login } from "../api";
+import { AppContext } from "../context/applicationContext";
+import { useNavigate } from "react-router";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const { setSession } = useContext(AppContext);
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email) {
-      setError("Email is required");
-    } else if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Email address is invalid");
+    if (!username) {
+      setError("Username is required");
     } else if (!password) {
       setError("Password is required");
     } else {
       setError("");
-      // Handle form submission
-      console.log("Form submitted:", { email, password });
+      const response = await login(username, password);
+        if (response.error) {
+            setError(response.error);
+        } else {
+            setSession(response);
+            navigate("/dashboard");
+        }
+
+    }
+  };
+
+  const handleEmailChange = (e) => {
+    setUsername(e.target.value);
+    if (error) {
+      setError("");
+    }
+  };
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    if (error) {
+      setError("");
     }
   };
 
@@ -33,19 +55,17 @@ const Login = () => {
             htmlFor="email"
             className="block text-gray-700 text-sm font-bold mb-2"
           >
-            Email:
+            Username:
           </label>
           <input
-            type="email"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            id="username"
+            name="username"
+            value={username}
+            onChange={handleEmailChange}
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               error ? "border-red-500" : ""
             }`}
             placeholder="Enter your email"
-            required
           />
         </div>
         <div className="mb-6">
@@ -60,12 +80,11 @@ const Login = () => {
             id="password"
             name="password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={handlePasswordChange}
             className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ${
               error ? "border-red-500" : ""
             }`}
             placeholder="Enter your password"
-            required
           />
         </div>
         <button

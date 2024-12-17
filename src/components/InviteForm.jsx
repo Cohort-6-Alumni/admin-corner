@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { sendInvite } from "../api";
+import PropTypes from "prop-types";
 
-const InviteForm = () => {
+const InviteForm = ({token}) => {
+
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email) {
       setError("Email is required");
@@ -13,8 +16,14 @@ const InviteForm = () => {
     } else {
       setError("");
       // Handle form submission
-      console.log("Form submitted:", email);
+      const response = await sendInvite(email, token);
+      if (response.error) {
+        setError(response.error);
+      } else {
+        // Handle success
+        setEmail("");
     }
+  };
   };
 
   const handleChange = (e) => {
@@ -61,6 +70,10 @@ const InviteForm = () => {
       </form>
     </>
   );
+};
+
+InviteForm.propTypes = {
+  token: PropTypes.string.isRequired,
 };
 
 export default InviteForm;

@@ -18,7 +18,7 @@ const Card = ({user}) => {
             year: "numeric",
           })}
         </p>
-        <h2 className="text-5xl font-medium mb-2 text-white">
+        <h2 className="text-4xl font-medium mb-2 text-white">
           Welcome Back {`${user}!`}
         </h2>
         <p className="text-gray-300">Take full control of your profile.</p>
