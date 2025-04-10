@@ -17,7 +17,6 @@ const AppContextProvider = ({ children }) => {
 
   // get the userData (username and token) from cookies
   const getSession = () => {
-    console.log(cookies)
     const userData = cookies.userData || null;
     return userData;
   };
